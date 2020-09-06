@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from datetime import datetime
 
 
-def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
+def get_data_analysis3(stock_code, stock_name, test_start, test_end, m):
     global dates, open_prices, highs, lows, closes, precloses, pctChgs
     filename = '/home/cdd/Desktop/Scraping/stocks/stock_analysis/stock_data/' + stock_code + stock_name + '.csv'
     with open(filename) as f:
@@ -45,22 +45,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0                                                     # 清仓，股票数量为0
+            account_stock = 0                                                 # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock                        # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0
@@ -101,22 +92,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0  # 清仓，股票数量为0
+            account_stock = 0  # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock  # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000  # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0
@@ -157,22 +139,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0                                                     # 清仓，股票数量为0
+            account_stock = 0                                                 # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock                        # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0
@@ -215,22 +188,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0                                                     # 清仓，股票数量为0
+            account_stock = 0                                                 # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock                        # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0
@@ -274,22 +238,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0                                                     # 清仓，股票数量为0
+            account_stock = 0                                                 # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock                        # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0
@@ -333,22 +288,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0                                                     # 清仓，股票数量为0
+            account_stock = 0                                                 # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock                        # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0
@@ -392,22 +338,13 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if highs[i]/precloses[i] > m:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            """以收盘价卖出"""
+            stock_num = 0                                                     # 清仓，股票数量为0
+            account_stock = 0                                                 # 股票市值为0
+            account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+            account_sum = account_cash + account_stock                        # 当日账户总额
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
         else:
             act = '空仓'
             stock_num = 0                                                   # 空仓，股票数量为0

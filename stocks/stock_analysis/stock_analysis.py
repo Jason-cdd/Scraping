@@ -34,7 +34,7 @@ def get_data(stock_code, stock_name):
 def stock_analysis_1(stock_code, stock_name, test_start, test_end, m):
     """首跌买入策略"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
-    stock_nums, stock_costs, account_profits = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    stock_nums, stock_costs, account_profits_1 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i] < 0:                  # 账户空仓、当日下跌买入
@@ -78,78 +78,21 @@ def stock_analysis_1(stock_code, stock_name, test_start, test_end, m):
         account_stocks.append(account_stock)
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
-        account_profits.append(account_profit)
+        account_profits_1.append(account_profit)
         acts.append(act)
 
     """绘制收益曲线"""
     fig = plt.figure(dpi=128, figsize=(10, 6))
-    plt.plot(dates[test_start:test_end], account_profits, c='red')
-    plt.title(stock_code)
+    plt.plot(dates[test_start:test_end], account_profits_1, c='red')
+    plt.title(stock_code + '(n=1, m=' + str(m) + ')')
     fig.autofmt_xdate()
     plt.show()
 
-
-def stock_analysis_3(stock_code, stock_name, test_start, test_end, m):
-    """连续三日下跌买入策略"""
-    account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
-    stock_nums, stock_costs, account_profits = [0], [], []                              # 账户股票数量、股票成本、账户收益
-    acts = []
-    for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] and pctChgs[i-2] < 0:                  # 账户空仓、当日下跌买入
-            act = '买入'
-            stock_num = account_sums[-1] // closes[i]               # 买入股票数量
-            account_stock = stock_num * closes[i]                   # 股票市值
-            account_cash = account_sums[-1] - account_stock         # 现金余额
-            account_sum = account_cash + account_stock              # 当日账户总额
-            stock_cost = closes[i]                                  # 股票成本
-            account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
-        elif stock_nums[-1] != 0:
-            act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-            else:
-                """否则以收盘价卖出"""
-                stock_num = 0                                                     # 清仓，股票数量为0
-                account_stock = 0                                                 # 股票市值为0
-                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
-                account_sum = account_cash + account_stock                        # 当日账户总额
-                stock_cost = 0
-                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
-        else:
-            act = '空仓'
-            stock_num = 0                                                   # 空仓，股票数量为0
-            account_stock = 0                                               # 空仓，股票市值为0
-            account_cash = account_cashes[-1]                               # 账户现金不变
-            account_sum = account_sums[-1]                                  # 账户总额不变
-            stock_cost = 0
-            account_profit = (account_sum - 1000000) * 100 / 1000000        # 对应当日账户总收益
-
-        """更新账户"""
-        account_sums.append(account_sum)
-        account_cashes.append(account_cash)
-        account_stocks.append(account_stock)
-        stock_nums.append(stock_num)
-        stock_costs.append(stock_cost)
-        account_profits.append(account_profit)
-        acts.append(act)
-
-    """绘制收益曲线"""
-    fig = plt.figure(dpi=128, figsize=(10, 6))
-    plt.plot(dates[test_start:test_end], account_profits, c='red')
-    plt.title(stock_code)
-    fig.autofmt_xdate()
-    plt.show()
 
 def stock_analysis_2(stock_code, stock_name, test_start, test_end, m):
     """连续两日下跌买入策略"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
-    stock_nums, stock_costs, account_profits = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    stock_nums, stock_costs, account_profits_2 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0:                  # 账户空仓、当日下跌买入
@@ -193,12 +136,305 @@ def stock_analysis_2(stock_code, stock_name, test_start, test_end, m):
         account_stocks.append(account_stock)
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
-        account_profits.append(account_profit)
+        account_profits_2.append(account_profit)
         acts.append(act)
 
     """绘制收益曲线"""
     fig = plt.figure(dpi=128, figsize=(10, 6))
-    plt.plot(dates[test_start:test_end], account_profits, c='red')
-    plt.title(stock_code)
+    plt.plot(dates[test_start:test_end], account_profits_2, c='red')
+    plt.title(stock_code + '(n=2)')
+    fig.autofmt_xdate()
+    plt.show()
+
+
+def stock_analysis_3(stock_code, stock_name, test_start, test_end, m):
+    """连续三日下跌买入策略"""
+    account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
+    stock_nums, stock_costs, account_profits_3 = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    acts = []
+    for i in range(test_start, test_end):
+        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0:                  # 账户空仓、当日下跌买入
+            act = '买入'
+            stock_num = account_sums[-1] // closes[i]               # 买入股票数量
+            account_stock = stock_num * closes[i]                   # 股票市值
+            account_cash = account_sums[-1] - account_stock         # 现金余额
+            account_sum = account_cash + account_stock              # 当日账户总额
+            stock_cost = closes[i]                                  # 股票成本
+            account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
+        elif stock_nums[-1] != 0:
+            act = '卖出'
+            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+                """如果当日最大涨幅超过2%，则以2%卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            else:
+                """否则以收盘价卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+        else:
+            act = '空仓'
+            stock_num = 0                                                   # 空仓，股票数量为0
+            account_stock = 0                                               # 空仓，股票市值为0
+            account_cash = account_cashes[-1]                               # 账户现金不变
+            account_sum = account_sums[-1]                                  # 账户总额不变
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000        # 对应当日账户总收益
+
+        """更新账户"""
+        account_sums.append(account_sum)
+        account_cashes.append(account_cash)
+        account_stocks.append(account_stock)
+        stock_nums.append(stock_num)
+        stock_costs.append(stock_cost)
+        account_profits_3.append(account_profit)
+        acts.append(act)
+
+    """绘制收益曲线"""
+    fig = plt.figure(dpi=128, figsize=(10, 6))
+    plt.plot(dates[test_start:test_end], account_profits_3, c='red')
+    plt.title(stock_code + '(n=3)')
+    fig.autofmt_xdate()
+    plt.show()
+
+
+def stock_analysis_4(stock_code, stock_name, test_start, test_end, m):
+    """连续三日下跌买入策略"""
+    account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
+    stock_nums, stock_costs, account_profits_4 = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    acts = []
+    for i in range(test_start, test_end):
+        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:                  # 账户空仓、当日下跌买入
+            act = '买入'
+            stock_num = account_sums[-1] // closes[i]               # 买入股票数量
+            account_stock = stock_num * closes[i]                   # 股票市值
+            account_cash = account_sums[-1] - account_stock         # 现金余额
+            account_sum = account_cash + account_stock              # 当日账户总额
+            stock_cost = closes[i]                                  # 股票成本
+            account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
+        elif stock_nums[-1] != 0:
+            act = '卖出'
+            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+                """如果当日最大涨幅超过2%，则以2%卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            else:
+                """否则以收盘价卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+        else:
+            act = '空仓'
+            stock_num = 0                                                   # 空仓，股票数量为0
+            account_stock = 0                                               # 空仓，股票市值为0
+            account_cash = account_cashes[-1]                               # 账户现金不变
+            account_sum = account_sums[-1]                                  # 账户总额不变
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000        # 对应当日账户总收益
+
+        """更新账户"""
+        account_sums.append(account_sum)
+        account_cashes.append(account_cash)
+        account_stocks.append(account_stock)
+        stock_nums.append(stock_num)
+        stock_costs.append(stock_cost)
+        account_profits_4.append(account_profit)
+        acts.append(act)
+
+    """绘制收益曲线"""
+    fig = plt.figure(dpi=128, figsize=(10, 6))
+    plt.plot(dates[test_start:test_end], account_profits_4, c='red')
+    plt.title(stock_code + '(n=4)')
+    fig.autofmt_xdate()
+    plt.show()
+
+
+def stock_analysis_5(stock_code, stock_name, test_start, test_end, m):
+    """连续三日下跌买入策略"""
+    account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
+    stock_nums, stock_costs, account_profits_5 = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    acts = []
+    for i in range(test_start, test_end):
+        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+                and pctChgs[i-3] < 0 and pctChgs[i-4] < 0:                  # 账户空仓、当日下跌买入
+            act = '买入'
+            stock_num = account_sums[-1] // closes[i]               # 买入股票数量
+            account_stock = stock_num * closes[i]                   # 股票市值
+            account_cash = account_sums[-1] - account_stock         # 现金余额
+            account_sum = account_cash + account_stock              # 当日账户总额
+            stock_cost = closes[i]                                  # 股票成本
+            account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
+        elif stock_nums[-1] != 0:
+            act = '卖出'
+            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+                """如果当日最大涨幅超过2%，则以2%卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            else:
+                """否则以收盘价卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+        else:
+            act = '空仓'
+            stock_num = 0                                                   # 空仓，股票数量为0
+            account_stock = 0                                               # 空仓，股票市值为0
+            account_cash = account_cashes[-1]                               # 账户现金不变
+            account_sum = account_sums[-1]                                  # 账户总额不变
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000        # 对应当日账户总收益
+
+        """更新账户"""
+        account_sums.append(account_sum)
+        account_cashes.append(account_cash)
+        account_stocks.append(account_stock)
+        stock_nums.append(stock_num)
+        stock_costs.append(stock_cost)
+        account_profits_5.append(account_profit)
+        acts.append(act)
+
+    """绘制收益曲线"""
+    fig = plt.figure(dpi=128, figsize=(10, 6))
+    plt.plot(dates[test_start:test_end], account_profits_5, c='red')
+    plt.title(stock_code + '(n=5)')
+    fig.autofmt_xdate()
+    plt.show()
+
+
+def stock_analysis_6(stock_code, stock_name, test_start, test_end, m):
+    """连续三日下跌买入策略"""
+    account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
+    stock_nums, stock_costs, account_profits_6 = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    acts = []
+    for i in range(test_start, test_end):
+        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+                and pctChgs[i-3] < 0 and pctChgs[i-4] < 0 and pctChgs[i-5] < 0:                  # 账户空仓、当日下跌买入
+            act = '买入'
+            stock_num = account_sums[-1] // closes[i]               # 买入股票数量
+            account_stock = stock_num * closes[i]                   # 股票市值
+            account_cash = account_sums[-1] - account_stock         # 现金余额
+            account_sum = account_cash + account_stock              # 当日账户总额
+            stock_cost = closes[i]                                  # 股票成本
+            account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
+        elif stock_nums[-1] != 0:
+            act = '卖出'
+            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+                """如果当日最大涨幅超过2%，则以2%卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            else:
+                """否则以收盘价卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+        else:
+            act = '空仓'
+            stock_num = 0                                                   # 空仓，股票数量为0
+            account_stock = 0                                               # 空仓，股票市值为0
+            account_cash = account_cashes[-1]                               # 账户现金不变
+            account_sum = account_sums[-1]                                  # 账户总额不变
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000        # 对应当日账户总收益
+
+        """更新账户"""
+        account_sums.append(account_sum)
+        account_cashes.append(account_cash)
+        account_stocks.append(account_stock)
+        stock_nums.append(stock_num)
+        stock_costs.append(stock_cost)
+        account_profits_6.append(account_profit)
+        acts.append(act)
+
+    """绘制收益曲线"""
+    fig = plt.figure(dpi=128, figsize=(10, 6))
+    plt.plot(dates[test_start:test_end], account_profits_6, c='red')
+    plt.title(stock_code + '(n=6)')
+    fig.autofmt_xdate()
+    plt.show()
+
+
+def stock_analysis_7(stock_code, stock_name, test_start, test_end, m):
+    """连续三日下跌买入策略"""
+    account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
+    stock_nums, stock_costs, account_profits_7 = [0], [], []                              # 账户股票数量、股票成本、账户收益
+    acts = []
+    for i in range(test_start, test_end):
+        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+                and pctChgs[i-3] < 0 and pctChgs[i-4] < 0 and pctChgs[i-5] < 0 and pctChgs[i-6] < 0:                  # 账户空仓、当日下跌买入
+            act = '买入'
+            stock_num = account_sums[-1] // closes[i]               # 买入股票数量
+            account_stock = stock_num * closes[i]                   # 股票市值
+            account_cash = account_sums[-1] - account_stock         # 现金余额
+            account_sum = account_cash + account_stock              # 当日账户总额
+            stock_cost = closes[i]                                  # 股票成本
+            account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
+        elif stock_nums[-1] != 0:
+            act = '卖出'
+            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+                """如果当日最大涨幅超过2%，则以2%卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+            else:
+                """否则以收盘价卖出"""
+                stock_num = 0                                                     # 清仓，股票数量为0
+                account_stock = 0                                                 # 股票市值为0
+                account_cash = account_cashes[-1] + (stock_nums[-1] * closes[i])  # 账户现金
+                account_sum = account_cash + account_stock                        # 当日账户总额
+                stock_cost = 0
+                account_profit = (account_sum - 1000000) * 100 / 1000000          # 对应当日账户总收益
+        else:
+            act = '空仓'
+            stock_num = 0                                                   # 空仓，股票数量为0
+            account_stock = 0                                               # 空仓，股票市值为0
+            account_cash = account_cashes[-1]                               # 账户现金不变
+            account_sum = account_sums[-1]                                  # 账户总额不变
+            stock_cost = 0
+            account_profit = (account_sum - 1000000) * 100 / 1000000        # 对应当日账户总收益
+
+        """更新账户"""
+        account_sums.append(account_sum)
+        account_cashes.append(account_cash)
+        account_stocks.append(account_stock)
+        stock_nums.append(stock_num)
+        stock_costs.append(stock_cost)
+        account_profits_7.append(account_profit)
+        acts.append(act)
+
+    """绘制收益曲线"""
+    fig = plt.figure(dpi=128, figsize=(10, 6))
+    plt.plot(dates[test_start:test_end], account_profits_7, c='red')
+    plt.title(stock_code + '(n=7)')
     fig.autofmt_xdate()
     plt.show()
