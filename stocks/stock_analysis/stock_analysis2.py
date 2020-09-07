@@ -3,6 +3,9 @@ from matplotlib import pyplot as plt
 from datetime import datetime
 
 
+"""
+相同止盈标准m条件下，不同下跌天数买入策略对比，当m>1.1时，它的结果和stock_analysis3是一样的
+"""
 def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     global dates, open_prices, highs, lows, closes, precloses, pctChgs
     filename = '/home/cdd/Desktop/Scraping/stocks/stock_analysis/stock_data/' + stock_code + stock_name + '.csv'
@@ -35,7 +38,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_1 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-1] >= 0 and pctChgs[i] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -91,7 +94,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_2 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-2] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -147,7 +150,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_3 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-3] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -205,7 +208,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_4 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -263,7 +266,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_5 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+        if stock_nums[-1] == 0 and pctChgs[i-5] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
                 and pctChgs[i-3] < 0 and pctChgs[i-4] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
@@ -322,7 +325,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_6 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+        if stock_nums[-1] == 0 and pctChgs[i-6] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
                 and pctChgs[i-3] < 0 and pctChgs[i-4] < 0 and pctChgs[i-5] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
@@ -381,7 +384,7 @@ def get_data_analysis2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_7 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+        if stock_nums[-1] == 0 and pctChgs[i-7] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
                 and pctChgs[i-3] < 0 and pctChgs[i-4] < 0 and pctChgs[i-5] < 0 and pctChgs[i-6] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量

@@ -37,7 +37,7 @@ def stock_analysis_1(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_1 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-1] >= 0 and pctChgs[i] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -47,8 +47,8 @@ def stock_analysis_1(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
-                """如果当日最大涨幅超过2%，则以2%卖出"""
+            if highs[i]/precloses[i] > m:
+                """如果当日最大涨幅超过m，则以m卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
                 account_cash = account_cashes[-1] + (account_stocks[-1] * m)      # 账户现金
@@ -95,7 +95,7 @@ def stock_analysis_2(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_2 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-2] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -105,7 +105,7 @@ def stock_analysis_2(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+            if highs[i]/precloses[i] > m:
                 """如果当日最大涨幅超过2%，则以2%卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
@@ -153,7 +153,7 @@ def stock_analysis_3(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_3 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-3] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -163,7 +163,7 @@ def stock_analysis_3(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+            if highs[i]/precloses[i] > m:
                 """如果当日最大涨幅超过2%，则以2%卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
@@ -211,7 +211,7 @@ def stock_analysis_4(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_4 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:                  # 账户空仓、当日下跌买入
+        if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
             account_stock = stock_num * closes[i]                   # 股票市值
@@ -221,7 +221,7 @@ def stock_analysis_4(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+            if highs[i]/precloses[i] > m:
                 """如果当日最大涨幅超过2%，则以2%卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
@@ -269,7 +269,7 @@ def stock_analysis_5(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_5 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+        if stock_nums[-1] == 0 and pctChgs[i-5] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
                 and pctChgs[i-3] < 0 and pctChgs[i-4] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
@@ -280,7 +280,7 @@ def stock_analysis_5(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+            if highs[i]/precloses[i] > m:
                 """如果当日最大涨幅超过2%，则以2%卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
@@ -328,7 +328,7 @@ def stock_analysis_6(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_6 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+        if stock_nums[-1] == 0 and pctChgs[i-6] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
                 and pctChgs[i-3] < 0 and pctChgs[i-4] < 0 and pctChgs[i-5] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
@@ -339,7 +339,7 @@ def stock_analysis_6(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+            if highs[i]/precloses[i] > m:
                 """如果当日最大涨幅超过2%，则以2%卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
@@ -387,7 +387,7 @@ def stock_analysis_7(stock_code, stock_name, test_start, test_end, m):
     stock_nums, stock_costs, account_profits_7 = [0], [], []                              # 账户股票数量、股票成本、账户收益
     acts = []
     for i in range(test_start, test_end):
-        if stock_nums[-1] == 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
+        if stock_nums[-1] == 0 and pctChgs[i-7] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 \
                 and pctChgs[i-3] < 0 and pctChgs[i-4] < 0 and pctChgs[i-5] < 0 and pctChgs[i-6] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
             stock_num = account_sums[-1] // closes[i]               # 买入股票数量
@@ -398,7 +398,7 @@ def stock_analysis_7(stock_code, stock_name, test_start, test_end, m):
             account_profit = (account_sum - 1000000)*100/1000000    # 对应当日账户总收益
         elif stock_nums[-1] != 0:
             act = '卖出'
-            if (highs[i] - precloses[i])*100/precloses[i] > 2:
+            if highs[i]/precloses[i] > m:
                 """如果当日最大涨幅超过2%，则以2%卖出"""
                 stock_num = 0                                                     # 清仓，股票数量为0
                 account_stock = 0                                                 # 股票市值为0
