@@ -35,7 +35,7 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
     """首跌买入策略，次日尾盘卖出"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]            # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_0 = [0], [], []                              # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_0 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:                  # 账户空仓、当日下跌买入
             act = '买入'
@@ -70,12 +70,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_0.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_0.append(1)
+            else:
+                acts_0.append(0)
 
     """首跌买入策略，m=1.01"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_1 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_1 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -119,12 +123,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_1.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_1.append(1)
+            else:
+                acts_1.append(0)
 
     """首跌买入策略，m=1.02"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_2 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_2 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -168,12 +176,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_2.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_2.append(1)
+            else:
+                acts_2.append(0)
 
     """首跌买入策略，m=1.03"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_3 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_3 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -217,12 +229,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_3.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_3.append(1)
+            else:
+                acts_3.append(0)
 
     """首跌买入策略，m=1.04"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_4 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_4 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -266,12 +282,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_4.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_4.append(1)
+            else:
+                acts_4.append(0)
 
     """首跌买入策略，m=1.05"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_5 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_5 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -315,12 +335,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_5.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_5.append(1)
+            else:
+                acts_5.append(0)
 
     """首跌买入策略，m=1.06"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_6 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_6 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -364,12 +388,16 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_6.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_6.append(1)
+            else:
+                acts_6.append(0)
 
     """首跌买入策略，m=1.07"""
     account_sums, account_stocks, account_cashes = [1000000], [0], [1000000]  # 总账户金额、股票市值、账户现金
     stock_nums, stock_costs, account_profits_7 = [0], [], []  # 账户股票数量、股票成本、账户收益
-    acts = []
+    acts_7 = []
     for i in range(test_start, test_end):
         if stock_nums[-1] == 0 and pctChgs[i-4] >= 0 and pctChgs[i] < 0 and pctChgs[i-1] < 0 and pctChgs[i-2] < 0 and pctChgs[i-3] < 0:    # 账户空仓、当日下跌买入
             act = '买入'
@@ -413,7 +441,11 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
         stock_nums.append(stock_num)
         stock_costs.append(stock_cost)
         account_profits_7.append(account_profit)
-        acts.append(act)
+        if act == '卖出':
+            if account_sums[-1] > account_sums[-2]:
+                acts_7.append(1)
+            else:
+                acts_7.append(0)
 
     list_n4 = [round(account_profits_0[-1], 2),
                round(account_profits_1[-1], 2),
@@ -424,7 +456,18 @@ def get_data_analysis4_4(stock_code, stock_name, test_start, test_end):
                round(account_profits_6[-1], 2),
                round(account_profits_7[-1], 2),
                ]
-    print(list_n4)
+
+    list_act4 = [
+        round((sum(acts_0) / len(acts_0)), 2),
+        round((sum(acts_1) / len(acts_1)), 2),
+        round((sum(acts_2) / len(acts_2)), 2),
+        round((sum(acts_3) / len(acts_3)), 2),
+        round((sum(acts_4) / len(acts_4)), 2),
+        round((sum(acts_5) / len(acts_5)), 2),
+        round((sum(acts_6) / len(acts_6)), 2),
+        round((sum(acts_7) / len(acts_7)), 2),
+    ]
+    print(list_act4)
     fig = plt.figure(dpi=128, figsize=(10, 6))
     plt.plot(dates[test_start:test_end], account_profits_0, c='r')
     plt.plot(dates[test_start:test_end], account_profits_1, c='b')
